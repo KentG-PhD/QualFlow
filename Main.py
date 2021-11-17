@@ -4,6 +4,38 @@ from PyQt5 import QtCore as qtc
 import sys
 from PyQt5 import QtGui as qtg
 
+import copy
+import datetime
+import  difflib
+import logging
+from operator import itemgetter
+import os
+from random import randint
+import re
+import sys
+import traceback
+import webbrowser
+
+#from PyQt5 import QtCore, QtGui, QtWidgets
+#from PyQt5.Qt import QHelpEvent
+from PyQt5.QtCore import Qt  # for context menu
+from PyQt5.QtGui import QBrush, QColor, QSyntaxHighlighter, QTextCharFormat, QTextCursor
+
+# from .add_item_name import DialogAddItemName
+# from .color_selector import DialogColorSelect
+# from .color_selector import colors, TextColor
+# from .confirm_delete import DialogConfirmDelete
+# from .helpers import msecs_to_mins_and_secs, Message, DialogCodeInAllFiles, DialogGetStartAndEndMarks
+# from .GUI.base64_helper import *
+# from .GUI.ui_dialog_code_text import Ui_Dialog_code_text
+# from .memo import DialogMemo
+# from .report_attributes import DialogSelectAttributeParameters
+# from .reports import DialogReportCoderComparisons, DialogReportCodeFrequencies  # for isinstance()
+# from .report_codes import DialogReportCodes
+# from .report_code_summary import DialogReportCodeSummary  # for isinstance()
+# from .select_items import DialogSelectItems  # for isinstance()
+
+
 
 #the proper way would be make a folder inside here and store all the ui and ui components inside 
 #a folder. You want to manage the comps from a python file; create class called main screen;
@@ -15,13 +47,44 @@ from PyQt5 import QtGui as qtg
 #     MainWindow.show()
 #     sys.exit(app.exec_())
 
+class SyntaxHighlighter(QSyntaxHighlighter):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.highlight_lines = {}
+
+    def highlight_line(self, line_num, fmt):
+        if isinstance(line_num, int) and line_num >= 0 and isinstance(fmt, QTextCharFormat):
+            self.highlight_lines[line_num] = fmt
+            block = self.document().findBlockByLineNumber(line_num)
+            self.rehighlightBlock(block)
+
+    def clear_highlight(self):
+        self.highlight_lines = {}
+        self.rehighlight()
+    
+    def highlightBlock(self, text):
+        blockNumber = self.currentBlock().blockNumber()
+        fmt = self.highlight_lines.get(blockNumber)
+        if fmt is not None:
+            self.setFormat(0, len(text), fmt)
+    
+    def highlightSelection(self, text):
+        pass
+
+
+    
+
+
+
+
+
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setupUi(self)
         self.file_select_button.clicked.connect(self.show_text)
         self.add_code_button.clicked.connect(self.add_code)
-        #self.tag_it_button.clicked.connect(self.assign_code)
+        self.tag_it_button.clicked.connect(self.assign_code)
         self.show()
     
     def show_text(self):
@@ -51,9 +114,16 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.code_list.addItem(x)
         self.code_input_box.setPlainText('')
 
-    # def assign_code(self):
-    #     cursor = qtg.QTextCursor.selectedText()
-    #     print (cursor)
+    def assign_code(self):
+        select_text = self.file_viewer.textCursor()#I have now slected text! 
+        z = select_text.selectedText()
+        print(z)
+        self.highlighter = SyntaxHighlighter(self.file_viewer.document())# this part highlights the line
+        fmt = QTextCharFormat()
+        fmt.setBackground(QColor('yellow'))
+        self.highlighter.highlight_line(0, fmt)
+
+        #self.highighter.clear_highlight()
 
 
 # class Highlighter(QSyntaxHighlighter):
