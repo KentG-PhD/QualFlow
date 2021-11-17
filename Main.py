@@ -51,10 +51,11 @@ class SyntaxHighlighter(QSyntaxHighlighter):
     def __init__(self, parent):
         super().__init__(parent)
         self.highlight_lines = {}
+        self.highlight_block = {}
 
     def highlight_line(self, line_num, fmt):
         if isinstance(line_num, int) and line_num >= 0 and isinstance(fmt, QTextCharFormat):
-            self.highlight_lines[line_num] = fmt
+            self.highlight_lines[line_num] = fmt # I don't undertand this line of code
             block = self.document().findBlockByLineNumber(line_num)
             self.rehighlightBlock(block)
 
@@ -62,13 +63,18 @@ class SyntaxHighlighter(QSyntaxHighlighter):
         self.highlight_lines = {}
         self.rehighlight()
     
-    def highlightBlock(self, text):
-        blockNumber = self.currentBlock().blockNumber()
-        fmt = self.highlight_lines.get(blockNumber)
-        if fmt is not None:
-            self.setFormat(0, len(text), fmt)
+    def highlightBlock(self, block, fmt):
+        if isinstance(block, int) and block >= 0 and isinstance(fmt, QTextCharFormat):
+            self.highlight_lines[block] = fmt # I don't undertand this line of code
+            target_block = self.document().findBlock(block)
+            self.rehighlightBlock(target_block)
+
+        
     
     def highlightSelection(self, text):
+        selected_text = text
+        selected_text = self.highlight
+        print(selected_text)
         pass
 
 
@@ -84,7 +90,9 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.file_select_button.clicked.connect(self.show_text)
         self.add_code_button.clicked.connect(self.add_code)
-        self.tag_it_button.clicked.connect(self.assign_code)
+        #self.tag_it_button.clicked.connect(self.assign_code)
+        self.tag_it_button.clicked.connect(self.highlight_selection)
+
         self.show()
     
     def show_text(self):
@@ -121,9 +129,20 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.highlighter = SyntaxHighlighter(self.file_viewer.document())# this part highlights the line
         fmt = QTextCharFormat()
         fmt.setBackground(QColor('yellow'))
-        self.highlighter.highlight_line(0, fmt)
+        #self.highlighter.highlight_line(0, fmt)
+        self.highlighter.highlightSelection(select_text)
 
         #self.highighter.clear_highlight()
+    def highlight_selection(self):
+        selected_text = self.file_viewer.textCursor()
+        x = selected_text.position()
+        # blockNumber = self.file_viewer.textCursor()#blocks are separated by returns
+        # x = blockNumber.blockNumber()
+        print(x)
+        # fmt = self.highlight_lines.get(blockNumber)
+        # if fmt is not None:
+        #     self.setFormat(0, len(text), fmt)
+    
 
 
 # class Highlighter(QSyntaxHighlighter):
