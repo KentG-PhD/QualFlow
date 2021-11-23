@@ -4,36 +4,11 @@ from PyQt5 import QtCore as qtc
 import sys
 from PyQt5 import QtGui as qtg
 
-import copy
-import datetime
-import  difflib
-import logging
-from operator import itemgetter
-import os
-from random import randint
-import re
-import sys
-import traceback
-import webbrowser
 
 #from PyQt5 import QtCore, QtGui, QtWidgets
 #from PyQt5.Qt import QHelpEvent
 from PyQt5.QtCore import Qt  # for context menu
 from PyQt5.QtGui import QBrush, QColor, QSyntaxHighlighter, QTextCharFormat, QTextCursor
-
-# from .add_item_name import DialogAddItemName
-# from .color_selector import DialogColorSelect
-# from .color_selector import colors, TextColor
-# from .confirm_delete import DialogConfirmDelete
-# from .helpers import msecs_to_mins_and_secs, Message, DialogCodeInAllFiles, DialogGetStartAndEndMarks
-# from .GUI.base64_helper import *
-# from .GUI.ui_dialog_code_text import Ui_Dialog_code_text
-# from .memo import DialogMemo
-# from .report_attributes import DialogSelectAttributeParameters
-# from .reports import DialogReportCoderComparisons, DialogReportCodeFrequencies  # for isinstance()
-# from .report_codes import DialogReportCodes
-# from .report_code_summary import DialogReportCodeSummary  # for isinstance()
-# from .select_items import DialogSelectItems  # for isinstance()
 
 
 
@@ -71,11 +46,11 @@ class SyntaxHighlighter(QSyntaxHighlighter):
 
         
     
-    def highlightSelection(self, text):
-        selected_text = text
-        selected_text = self.highlight
-        print(selected_text)
-        pass
+    # def highlightSelection(self, text):
+    #     selected_text = text
+    #     selected_text = self.highlight()
+    #     print(selected_text)
+    #     pass
 
 
     
@@ -90,8 +65,8 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.file_select_button.clicked.connect(self.show_text)
         self.add_code_button.clicked.connect(self.add_code)
-        #self.tag_it_button.clicked.connect(self.assign_code)
-        self.tag_it_button.clicked.connect(self.highlight_selection)
+        self.tag_it_button.clicked.connect(self.assign_code)
+        #self.tag_it_button.clicked.connect(self.highlight_selection)
 
         self.show()
     
@@ -126,11 +101,12 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         select_text = self.file_viewer.textCursor()#I have now slected text! 
         z = select_text.selectedText()
         print(z)
-        self.highlighter = SyntaxHighlighter(self.file_viewer.document())# this part highlights the line
-        fmt = QTextCharFormat()
-        fmt.setBackground(QColor('yellow'))
-        #self.highlighter.highlight_line(0, fmt)
-        self.highlighter.highlightSelection(select_text)
+        self.file_viewer.setStyleSheet("selection-color: rgb(255,255,0); selection-background-color: rgb(102,205,0)")#this highlights selected text while it is selected...
+        # self.highlighter = SyntaxHighlighter(self.file_viewer.document())# this part highlights the line
+        # fmt = QTextCharFormat()
+        # fmt.setBackground(QColor('yellow'))
+        # self.highlighter.highlight_line(0, fmt)
+        #self.highlighter.highlightSelection(select_text)
 
         #self.highighter.clear_highlight()
     def highlight_selection(self):
