@@ -14,16 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="file_viewer">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>171</width>
-      <height>261</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="file_select_button">
     <property name="geometry">
      <rect>
@@ -100,16 +90,16 @@
      <rect>
       <x>20</x>
       <y>490</y>
-      <width>111</width>
-      <height>20</height>
+      <width>131</width>
+      <height>31</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="add_code_button">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>480</y>
+      <x>150</x>
+      <y>490</y>
       <width>91</width>
       <height>41</height>
      </rect>
@@ -155,6 +145,16 @@
     </property>
     <property name="text">
      <string>save memo</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="file_viewer">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>181</width>
+      <height>261</height>
+     </rect>
     </property>
    </widget>
   </widget>
