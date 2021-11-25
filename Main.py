@@ -49,8 +49,8 @@ class SyntaxHighlighter(QSyntaxHighlighter):
     def highlightSelection(self, start_pos, end_pos):
         print(start_pos)
         print(end_pos)
-        pass
-
+        return
+        
     
 
 
@@ -102,8 +102,8 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         select_text = self.file_viewer.textCursor()#I have now slected text! 
         z = select_text.selectedText()
         print(z)
-        self.file_viewer.setStyleSheet("selection-color: rgb(255,255,0); selection-background-color: rgb(102,205,0)") #this highlights selected text while it is selected...
-        self.file_viewer.setTextBackgroundColor("(rgb(0,255,255)")
+        self.file_viewer.setStyleSheet("selection-color: rgb(0,255,0); selection-background-color: rgb(255,0,0)") #this highlights selected text while it is selected...
+        #self.file_viewer.setTextBackgroundColor("(rgb(0,255,255)")
         # self.highlighter = SyntaxHighlighter(self.file_viewer.document())# this part highlights the line
         # fmt = QTextCharFormat()
         # fmt.setBackground(QColor('yellow'))
@@ -117,6 +117,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         # blockNumber = self.file_viewer.textCursor()#blocks are separated by returns
         # x = blockNumber.blockNumber()
         print(x)
+        #print(y)
         # fmt = self.highlight_lines.get(blockNumber)
         # if fmt is not None:
         #     self.setFormat(0, len(text), fmt)
