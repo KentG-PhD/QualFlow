@@ -102,11 +102,12 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         select_text = self.file_viewer.textCursor()#I have now slected text! 
         z = select_text.selectedText()
         print(z)
+        fmt = QTextCharFormat()
+        fmt.setBackground(QColor('yellow'))
         self.file_viewer.setStyleSheet("selection-color: rgb(0,255,0); selection-background-color: rgb(255,0,0)") #this highlights selected text while it is selected...
+        self.file_viewer.setCurrentCharFormat(fmt)
         #self.file_viewer.setTextBackgroundColor("(rgb(0,255,255)")
         # self.highlighter = SyntaxHighlighter(self.file_viewer.document())# this part highlights the line
-        # fmt = QTextCharFormat()
-        # fmt.setBackground(QColor('yellow'))
         # self.highlighter.highlight_line(0, fmt)
         #self.highlighter.highlightSelection(select_text)
 
