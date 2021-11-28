@@ -22,6 +22,7 @@ from codebook import CodeBook
 #     MainWindow.show()
 #     sys.exit(app.exec_())
 
+#below is aborted attempt to use QSyntaxHighlighter; 
 # class SyntaxHighlighter(QSyntaxHighlighter):
 #     def __init__(self, parent):
 #         super().__init__(parent)
@@ -43,8 +44,6 @@ from codebook import CodeBook
 #             self.highlight_lines[block] = fmt # I don't undertand this line of code
 #             target_block = self.document().findBlock(block)
 #             self.rehighlightBlock(target_block)
-
-        
     
 #     def highlightSelection(self, start_pos, end_pos):
 #         print(start_pos)
@@ -82,6 +81,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             print(lines)
         self.file_viewer.setPlainText(lines)
     
+    #fixme work on show_img todo
     # def show_img(self):
     #     print('click2')
     #     fname = qtw.QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Text Files (*.txt *.png)")
@@ -95,10 +95,30 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def add_code(self):
         x = self.code_input_box.toPlainText() 
         print(x)
+        z = len(self.code_list)
+        print(z)
         self.codebook.addGroup(x)
-        #item = QListWidgetItem(x)
+        #item = QListWidgetItem(x) 
         self.code_list.addItem(x)
         self.code_input_box.setPlainText('')
+        #I was making progress on setting different colors but I got stuck because I don't understand how to use the dictionary? 
+        #I tried to use a list at first, but then I thought that I should be able to use the dictionary 
+        # like with Tags, but I broke it; see also codebook and highlightColor classes;
+        # 
+        colors = ['aliceblue', 'antiquewhite','aquamarine','azure','beige','lavender'] 	
+        nextColor = colors[z]
+        #tag_colors_list = []
+        #self.codebook.addTagColor(tag_colors_list)
+        self.codebook.setTagColor(nextColor)
+
+        # y = self.codebook# this is a rabbit hole; there should be an easier way usinghte dictionary that R set up; fixme!
+        # print(y)
+        w = self.codebook.getTagColors()
+        print('w:')
+        print(w)
+        
+       
+
         #self.code_list.setCurrentItem()
         #self.show_group_info()
 
@@ -107,7 +127,12 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         z = select_text.selectedText()
         print(z)
         fmt = QTextCharFormat()
-        fmt.setBackground(QColor('yellow'))
+        
+        highlightColor = QColor('yellow')
+        
+        #highlightColor = QColor(nextColor)
+        fmt.setBackground(highlightColor)
+        #fmt.setBackground(QColor('yellow'))
         #self.file_viewer.setStyleSheet("selection-color: rgb(0,255,0); selection-background-color: rgb(255,0,0)") #this highlights selected text while it is selected...
         self.file_viewer.setCurrentCharFormat(fmt)
         value = self.code_list.currentItem()
@@ -147,7 +172,76 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
 #         for patter, fmt in self._mapping.items(): 
 # #fix_me!! based on syntax highlighting youtube video  
 
-
+# ['aliceblue', 'antiquewhite','aquamarine','azure','beige','lavender'] 	
+#  			bisque		black(Safe 16 Hex3)	
+# blanchedalmond	
+#  	blue(Safe 16 Hex3)		blueviolet		brown	
+# burlywood	
+#  	cadetblue		chartreuse		chocolate	
+# coral	
+#  	cornflowerblue		cornsilk		crimson	
+# cyan(Safe 16=aqua Hex3)	
+#  	darkblue		darkcyan		darkgoldenrod	
+# darkgray	
+#  	darkgreen		darkgrey		darkkhaki	
+# darkmagenta	
+#  	darkolivegreen		darkorange		darkorchid	
+# darkred	
+#  	darksalmon		darkseagreen		darkslateblue	
+# darkslategray	
+#  	darkslategrey		darkturquoise		darkviolet	
+# deeppink	
+#  	deepskyblue		dimgray		dimgrey	
+# dodgerblue	
+#  	firebrick		floralwhite		forestgreen	
+# fuchsia(Safe 16 Hex3)	
+#  	gainsboro		ghostwhite		gold	
+# goldenrod	
+#  	gray(16)		green(16)		greenyellow	
+# grey(16)	
+#  	honeydew		hotpink		indianred	
+# indigo	
+#  	ivory		khaki			
+# lavenderblush	
+#  	lawngreen		lemonchiffon		lightblue	
+# lightcoral	
+#  	lightcyan		lightgoldenrodyellow		lightgray	
+# lightgreen	
+#  	lightgrey		lightpink		lightsalmon	
+# lightseagreen	
+#  	lightskyblue		lightslategray(Hex3)		lightslategrey(Hex3)	
+# lightsteelblue	
+#  	lightyellow		lime(Safe 16 Hex3)		limegreen	
+# linen	
+#  	magenta(Safe 16=fuchsia Hex3)		maroon(16)		mediumaquamarine	
+# mediumblue	
+#  	mediumorchid		mediumpurple		mediumseagreen	
+# mediumslateblue	
+#  	mediumspringgreen		mediumturquoise		mediumvioletred	
+# midnightblue	
+#  	mintcream		mistyrose		moccasin	
+# navajowhite	
+#  	navy(16)		oldlace		olive(16)	
+# olivedrab	
+#  	orange		orangered		orchid	
+# palegoldenrod	
+#  	palegreen		paleturquoise		palevioletred	
+# papayawhip	
+#  	peachpuff		peru		pink	
+# plum	
+#  	powderblue		purple(16)		red(Safe 16 Hex3)	
+# rosybrown	
+#  	royalblue		saddlebrown		salmon	
+# sandybrown	
+#  	seagreen		seashell		sienna	
+# silver(16)	
+#  	skyblue		slateblue		slategray	
+# slategrey	
+#  	springgreen		steelblue	
+# tan	
+#  	teal(16)			tomato	
+# turquoise	
+#  	violet	
     
 
 if __name__ == "__main__":
