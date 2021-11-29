@@ -8,6 +8,10 @@ class CodeBook:
     
     def addGroup(self, group_name):
         self.codebook[group_name] = []
+        dict_list = list(self.codebook)
+        print(dict_list)
+        for i, v in enumerate(self.codebook):
+            print(i, v)
 
     def addTag(self, tag_data, group_name):
         self.codebook[group_name].append(Tag(tag_data))
@@ -22,6 +26,10 @@ class CodeBook:
             string_value += f"{index + 1}: {tag.data}\n"
         
         return string_value
+
+    def getGroupNameIndex(self, group_name):
+        string_value = self.codebook['group_name'].index(group_name)
+        return string_value
     
     # def addTagColor(self, tag_color_list):
     #     self.codebook[tag_color_list] = []
@@ -32,7 +40,8 @@ class CodeBook:
         
         
     def getTagColors(self):
-        print(self.codebook['tag_colors_list'])
+        return self.codebook['tag_colors_list']
+        #print(self.codebook['tag_colors_list'])
         # for index, highlightColor in self.codebook['tag_colors_list']:
         #     color = {highlightColor.color}
         #     print(color)

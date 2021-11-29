@@ -116,6 +116,10 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         w = self.codebook.getTagColors()
         print('w:')
         print(w)
+        print('')
+        #print('test1:')
+        #q = self.codebook.getGroupNameIndex(x)
+        #print(q)
         
        
 
@@ -126,8 +130,17 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         select_text = self.file_viewer.textCursor()#I have now slected text! 
         z = select_text.selectedText()
         print(z)
-        fmt = QTextCharFormat()
         
+        value = self.code_list.currentItem()
+        group_name = value.text()
+        tag_data = z
+
+        self.codebook.addTag(tag_data, group_name)
+        self.show_group_info()
+        fmt = QTextCharFormat()
+        index_group_name = index(self.codebook[group_name])
+        print('index group name:')
+        print(index_group_name)
         highlightColor = QColor('yellow')
         
         #highlightColor = QColor(nextColor)
@@ -135,12 +148,6 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         #fmt.setBackground(QColor('yellow'))
         #self.file_viewer.setStyleSheet("selection-color: rgb(0,255,0); selection-background-color: rgb(255,0,0)") #this highlights selected text while it is selected...
         self.file_viewer.setCurrentCharFormat(fmt)
-        value = self.code_list.currentItem()
-        group_name = value.text()
-        tag_data = z
-
-        self.codebook.addTag(tag_data, group_name)
-        self.show_group_info()
 
         
     def highlight_selection(self):
