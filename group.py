@@ -17,3 +17,6 @@ class Group:
 
     def getTags(self):
         return self.tags
+
+    def getName(self):
+        return self.name
