@@ -129,7 +129,7 @@
      <string>new memo</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="save_memo_button">
+   <widget class="QPushButton" name="save_project_button">
     <property name="geometry">
      <rect>
       <x>460</x>
@@ -139,7 +139,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>save memo</string>
+     <string>save project</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="file_viewer">

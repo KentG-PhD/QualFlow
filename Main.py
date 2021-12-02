@@ -67,6 +67,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.add_code_button.clicked.connect(self.add_code)
         self.tag_it_button.clicked.connect(self.assign_code)
         self.code_list.clicked.connect(self.show_group_info)
+        self.save_project_button.clicked.connect(self.save_project)
         #self.tag_it_button.clicked.connect(self.highlight_selection)
         self.codebook = CodeBook()
         self.show()
@@ -80,6 +81,11 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             lines = f.read()
             print(lines)
         self.file_viewer.setPlainText(lines)
+
+    def save_project(self):
+        print('saving')
+        progress = self.codebook.saveProject()
+        print(progress)
     
     #fixme work on show_img todo
     # def show_img(self):
@@ -105,18 +111,18 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         #I tried to use a list at first, but then I thought that I should be able to use the dictionary 
         # like with Tags, but I broke it; see also codebook and highlightColor classes;
         # 
-        colors = ['aliceblue', 'antiquewhite','aquamarine','azure','beige','lavender'] 	
-        nextColor = colors[z]
+        #colors = ['aliceblue', 'antiquewhite','aquamarine','azure','beige','lavender'] 	
+        #nextColor = colors[z]
         #tag_colors_list = []
         #self.codebook.addTagColor(tag_colors_list)
-        self.codebook.setTagColor(nextColor)
+        #self.codebook.setTagColor(nextColor)
 
         # y = self.codebook# this is a rabbit hole; there should be an easier way usinghte dictionary that R set up; fixme!
         # print(y)
-        w = self.codebook.getTagColors()
-        print('w:')
-        print(w)
-        print('')
+        #w = self.codebook.getTagColors()
+        #print('w:')
+        #print(w)
+        #print('')
         #print('test1:')
         #q = self.codebook.getGroupNameIndex(x)
         #print(q)
@@ -138,10 +144,12 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.codebook.addTag(tag_data, group_name)
         self.show_group_info()
         fmt = QTextCharFormat()
-        index_group_name = index(self.codebook[group_name])
-        print('index group name:')
-        print(index_group_name)
-        highlightColor = QColor('yellow')
+        # index_group_name = index(self.codebook[group_name])
+        # print('index group name:')
+        # print(index_group_name)
+        #highlightColor = QColor('yellow')
+        
+        highlightColor = QColor(self.codebook.getColor(group_name))
         
         #highlightColor = QColor(nextColor)
         fmt.setBackground(highlightColor)
